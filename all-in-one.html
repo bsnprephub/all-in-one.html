@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All In ONE | Pakistan's Unified Jobs, Notes, Past Papers &amp; Quiz Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      --font-scale: 1;
+    }
+    html {
+      font-size: calc(16px * var(--font-scale));
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    /* High-visibility focus ring for keyboard & screen-reader accessibility */
+    *:focus-visible {
+      outline: 3px solid #10b981;
+      outline-offset: 2px;
+    }
+    /* High Contrast Accessibility Mode */
+    body.high-contrast {
+      background-color: #000000 !important;
+      color: #ffffff !important;
+    }
+    body.high-contrast .hc-card {
+      background-color: #0a0a0a !important;
+      border-color: #facc15 !important;
+      color: #ffffff !important;
+    }
+    /* VIP Shimmer Accent */
+    .vip-shimmer {
+      background: linear-gradient(110deg, #b45309 8%, #f59e0b 18%, #b45309 33%);
+      background-size: 200% 100%;
+      animation: shine 3.2s linear infinite;
+    }
+    @keyframes shine {
+      to {
+        background-position-x: -200%;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 min-h-screen flex flex-col">
+
+  <!-- Skip to Main Content (Accessibility) -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-emerald-600 focus:text-white focus:rounded-xl focus:font-bold">
+    Skip to main content
+  </a>
+
+  <!-- OWNER-ONLY ADMIN BAR (Completely hidden from regular students until logged in with password) -->
+  <div id="owner-admin-bar" class="hidden bg-emerald-950 text-emerald-100 border-b border-emerald-700/60 px-4 py-2.5 sticky top-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+        <span class="font-extrabold tracking-wide uppercase text-emerald-300">Owner Admin Session Active</span>
+        <span class="hidden sm:inline text-emerald-200/80">• Manage Uploads, Quizzes &amp; Live Ad Campaigns</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="openAdminStudio('upload-material')" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition">
+          + Upload Material / Quiz
+        </button>
+        <button type="button" onclick="openAdminStudio('ad-campaigns')" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold transition">
+          📢 Run / Manage Ads
+        </button>
+        <button type="button" onclick="logoutAdmin()" class="px-3 py-1.5 rounded-lg bg-rose-600/80 hover:bg-rose-600 text-white font-bold transition">
+          Logout Admin
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP ACCESSIBILITY & STUDENT ACCESS MODE BAR -->
+  <div class="bg-slate-900 text-slate-200 text-xs border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span class="font-medium">Pakistan's Unified Jobs, Notes, Books, Past Papers &amp; Quiz Portal</span>
+      </div>
+
+      <!-- Accessibility Controls + Student VIP Status -->
+      <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+        <div class="flex items-center bg-slate-800 rounded-lg p-0.5 border border-slate-700" role="group" aria-label="Font size controls">
+          <button type="button" onclick="adjustFontSize(-0.08)" class="px-2 py-1 hover:bg-slate-700 rounded-md font-bold" aria-label="Decrease text size">A-</button>
+          <button type="button" onclick="resetFontSize()" class="px-2 py-1 hover:bg-slate-700 rounded-md text-[11px]" aria-label="Default text size">A</button>
+          <button type="button" onclick="adjustFontSize(0.08)" class="px-2 py-1 hover:bg-slate-700 rounded-md font-bold" aria-label="Increase text size">A+</button>
+        </div>
+
+        <button type="button" onclick="toggleHighContrast()" id="hc-btn" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 font-semibold transition" aria-label="Toggle high contrast">
+          👁️ Contrast
+        </button>
+
+        <button type="button" onclick="toggleDarkMode()" id="theme-toggle-btn" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 transition" aria-label="Toggle dark mode">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-label" class="hidden sm:inline">Dark</span>
+        </button>
+
+        <button type="button" onclick="openVipModal()" class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 font-bold transition">
+          <span>👑</span>
+          <span id="header-vip-badge">Student: Standard Mode</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CLEAN STUDENT HEADER (Zero Admin Clutter) -->
+  <header class="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
+      <!-- Brand Logo (Secret 5-tap admin trigger built silently on logo) -->
+      <div onclick="handleLogoSecretTap()" role="button" tabindex="0" onkeydown="if(event.key==='Enter') resetAllFilters()" class="flex items-center gap-3 cursor-pointer select-none group" title="All In ONE Portal">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-emerald-600 via-teal-700 to-slate-900 flex items-center justify-center text-white font-black text-lg sm:text-xl shadow-md group-hover:scale-105 transition">
+          A1
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+              All In <span class="text-emerald-600 dark:text-emerald-400">ONE</span>
+            </span>
+            <span class="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300 rounded-full">
+              Official Hub
+            </span>
+          </div>
+          <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">
+            Job Ads • Notes • Books • PDFs • Past Papers • Quizzes
+          </p>
+        </div>
+      </div>
+
+      <!-- Student Quick Navigation Links -->
+      <nav class="hidden md:flex items-center gap-1.5" aria-label="Resource shortcuts">
+        <button type="button" onclick="quickFilterType('ALL')" class="px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">All Blocks</button>
+        <button type="button" onclick="quickFilterType('Job Ad')" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">📢 Job Ads</button>
+        <button type="button" onclick="quickFilterType('Notes')" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">📝 Notes &amp; Books</button>
+        <button type="button" onclick="quickFilterType('Past Paper')" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">🗂️ Past Papers</button>
+        <button type="button" onclick="quickFilterType('Quiz')" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">🧠 Quizzes</button>
+      </nav>
+
+      <!-- VIP Upgrade Button for Students -->
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="openVipModal()" class="px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold text-white vip-shimmer shadow hover:opacity-95 transition flex items-center gap-1.5">
+          <span>👑</span>
+          <span id="nav-vip-btn-text">Unlock VIP Pass</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- LIVE TOP BANNER AD SLOT (Controlled dynamically from Admin Ad Campaign Manager) -->
+  <div id="top-ad-banner-container" class="bg-slate-100 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 px-4 py-3">
+    <!-- Rendered dynamically by JS based on active Top Banner Ads -->
+  </div>
+
+  <!-- HERO & INSTANT SEARCH SECTION -->
+  <section class="bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950 text-white py-9 sm:py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
+    <div class="max-w-5xl mx-auto text-center">
+      <div class="inline-flex flex-wrap items-center justify-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-semibold mb-4">
+        <span>🇵🇰</span>
+        <span>FPSC • PPSC • SPSC • BPSC • SIBA • NTS • STS • PTS • FIA • NCCIA • ICT Police</span>
+      </div>
+      <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+        All Test Material, Jobs &amp; Quizzes in <span class="text-emerald-400">One Unified Place</span>
+      </h1>
+      <p class="mt-3 text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        No messy sliders—browse every Job Advertisement, Note, Book, PDF, Solved Past Paper, and Online Quiz together in clean blocks. Unlock items via <strong>Sponsored Ads</strong> or <strong>VIP Access</strong>.
+      </p>
+
+      <!-- Instant Live Search Box -->
+      <div class="mt-6 max-w-2xl mx-auto">
+        <label for="global-search" class="sr-only">Search all materials, job ads, books, past papers, and quizzes</label>
+        <div class="flex flex-col sm:flex-row gap-2 bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl border border-slate-700/40">
+          <div class="flex items-center flex-1 px-3">
+            <span class="text-slate-400 text-lg mr-2" aria-hidden="true">🔍</span>
+            <input
+              type="text"
+              id="global-search"
+              oninput="applyFilters()"
+              placeholder="Search FIA Inspector, NCCIA Cyber, SPSC SST, PPSC, NTS, Books..."
+              class="w-full py-2.5 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 text-sm sm:text-base focus:outline-none"
+            />
+            <button type="button" id="clear-search-btn" onclick="clearSearch()" class="hidden text-slate-400 hover:text-slate-600 px-2 text-sm font-bold" aria-label="Clear search">✕</button>
+          </div>
+          <button type="button" onclick="applyFilters()" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition shadow">
+            Search All
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UNIFIED FILTER BAR (Testing Agencies + Material Types + Access Filter — Wrapped Block Grid, NO Sliders) -->
+  <section class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-5 px-4 sm:px-6 lg:px-8" aria-label="Category and Type Filters">
+    <div class="max-w-7xl mx-auto space-y-4">
+      <!-- Testing Agencies Grid -->
+      <div>
+        <div class="flex items-center justify-between mb-2.5">
+          <h2 class="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            1. Select Testing Agency / Force
+          </h2>
+          <button type="button" onclick="resetAllFilters()" class="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline">
+            Reset All Filters
+          </button>
+        </div>
+        <div id="category-block-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-2">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Resource Type & Access Filter Row -->
+      <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+        <div>
+          <span class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-400 mb-2">2. Filter by Block Type</span>
+          <div class="flex flex-wrap gap-1.5" role="group" aria-label="Material type filters">
+            <button type="button" onclick="setTypeFilter('ALL')" data-type="ALL" class="type-pill px-3.5 py-2 rounded-xl text-xs font-extrabold bg-slate-900 text-white dark:bg-emerald-600 transition">
+              All Blocks
+            </button>
+            <button type="button" onclick="setTypeFilter('Job Ad')" data-type="Job Ad" class="type-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+              📢 Job Ads
+            </button>
+            <button type="button" onclick="setTypeFilter('Notes')" data-type="Notes" class="type-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+              📝 Notes
+            </button>
+            <button type="button" onclick="setTypeFilter('Book')" data-type="Book" class="type-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+              📚 Books
+            </button>
+            <button type="button" onclick="setTypeFilter('PDF')" data-type="PDF" class="type-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+              📄 PDFs
+            </button>
+            <button type="button" onclick="setTypeFilter('Past Paper')" data-type="Past Paper" class="type-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+              🗂️ Past Papers
+            </button>
+            <button type="button" onclick="setTypeFilter('Quiz')" data-type="Quiz" class="type-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+              🧠 Quizzes
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <label for="monetization-filter" class="text-xs font-bold text-slate-500 dark:text-slate-400">Unlock Type:</label>
+          <select id="monetization-filter" onchange="applyFilters()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
+            <option value="ALL">All Access Modes</option>
+            <option value="both">Ad Unlock OR VIP Paid</option>
+            <option value="ad_only">Free • Ad-Supported Only</option>
+            <option value="paid_only">VIP Paid Only</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN UNIFIED BLOCK GRID (ALL MATERIALS, JOB ADS, BOOKS, PDFS, PAST PAPERS & QUIZZES IN ONE PLACE) -->
+  <main id="main-content" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+      <div>
+        <h2 id="feed-heading" class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+          All Study Material, Job Ads, Books &amp; Quizzes
+        </h2>
+        <p id="feed-subheading" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+          Everything displayed together in unified blocks • Click any block to read, download, or attempt quiz
+        </p>
+      </div>
+      <span id="results-count-badge" class="px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+        0 Blocks Available
+      </span>
+    </div>
+
+    <!-- UNIFIED RESPONSIVE MULTI-COLUMN BLOCK GRID -->
+    <div id="unified-block-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- All items, quizzes, and sponsored ad blocks render here -->
+    </div>
+
+    <!-- Empty Filter State -->
+    <div id="empty-state" class="hidden bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-12 text-center">
+      <div class="text-4xl mb-3">🔎</div>
+      <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">No blocks match your selected filter</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-md mx-auto">
+        Try selecting "All Agencies" or "All Blocks" to view all uploaded materials, job advertisements, books, and quizzes.
+      </p>
+      <button type="button" onclick="resetAllFilters()" class="mt-5 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold transition">
+        Show All Blocks
+      </button>
+    </div>
+  </main>
+
+  <!-- CLEAN STUDENT FOOTER (No Admin Buttons or Clutter) -->
+  <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <div class="flex items-center gap-2.5 text-white font-black text-xl">
+            <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-sm">A1</span>
+            <span>All In <span class="text-emerald-400">ONE</span></span>
+          </div>
+          <p class="text-xs text-slate-400 mt-3 leading-relaxed">
+            Pakistan's unified educational &amp; career preparation platform for FPSC, PPSC, SPSC, BPSC, SIBA, NTS, STS, PTS, FIA, NCCIA, and ICT Police candidates.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-white font-bold text-sm mb-3">Testing Agencies &amp; Forces</h3>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <button type="button" onclick="selectCategory('FPSC')" class="hover:text-emerald-400">FPSC</button> •
+            <button type="button" onclick="selectCategory('PPSC')" class="hover:text-emerald-400">PPSC</button> •
+            <button type="button" onclick="selectCategory('SPSC')" class="hover:text-emerald-400">SPSC</button> •
+            <button type="button" onclick="selectCategory('BPSC')" class="hover:text-emerald-400">BPSC</button> •
+            <button type="button" onclick="selectCategory('SIBA')" class="hover:text-emerald-400">SIBA</button> •
+            <button type="button" onclick="selectCategory('NTS')" class="hover:text-emerald-400">NTS</button> •
+            <button type="button" onclick="selectCategory('STS')" class="hover:text-emerald-400">STS</button> •
+            <button type="button" onclick="selectCategory('PTS')" class="hover:text-emerald-400">PTS</button> •
+            <button type="button" onclick="selectCategory('FIA')" class="hover:text-emerald-400">FIA</button> •
+            <button type="button" onclick="selectCategory('NCCIA')" class="hover:text-emerald-400">NCCIA</button> •
+            <button type="button" onclick="selectCategory('ICT Police')" class="hover:text-emerald-400">ICT Police</button>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-white font-bold text-sm mb-3">Student Access Options</h3>
+          <p class="text-xs text-slate-400 mb-3">
+            Access study blocks for free by viewing sponsored ads, or upgrade to VIP for instant ad-free downloads and exclusive books.
+          </p>
+          <button type="button" onclick="openVipModal()" class="px-4 py-2 rounded-xl vip-shimmer text-white text-xs font-extrabold shadow">
+            👑 Upgrade to VIP Pass
+          </button>
+        </div>
+      </div>
+      <div class="border-t border-slate-800 mt-8 pt-6 text-center text-xs text-slate-500">
+        © 2026 All In ONE Portal Pakistan. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 1: 5-SECOND SPONSORED AD UNLOCK GATE (For Ad-Only & Both Items) -->
+  <!-- ===================================================================== -->
+  <div id="ad-gate-modal" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="ad-gate-title">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
+      <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 text-[10px] font-extrabold uppercase bg-amber-500 text-slate-950 rounded">Sponsored Ad</span>
+          <h3 id="ad-gate-title" class="text-sm font-extrabold">Unlocking Free Study Material...</h3>
+        </div>
+        <button type="button" onclick="closeAdGate()" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold">✕</button>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-4">
+        <!-- Dynamic Active Ad Creative Displayed Inside Gate -->
+        <div id="ad-gate-creative" class="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700">
+          <!-- Rendered dynamically from Admin's active ads -->
+        </div>
+
+        <!-- Countdown & Direct VIP Bypass Option -->
+        <div class="bg-slate-50 dark:bg-slate-800/70 p-4 rounded-xl text-center space-y-3">
+          <p id="ad-gate-status-text" class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200">
+            Please view this sponsor message for <span id="ad-countdown-num" class="text-emerald-600 font-black text-base">5</span> seconds to unlock for FREE...
+          </p>
+          <div class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+            <div id="ad-countdown-bar" class="h-full bg-emerald-600 transition-all duration-1000" style="width: 0%"></div>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2 pt-1">
+            <button type="button" id="ad-gate-proceed-btn" disabled onclick="completeAdGateUnlock()" class="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 disabled:bg-slate-400 text-white font-extrabold text-xs sm:text-sm transition">
+              Wait 5s to Unlock Free...
+            </button>
+            <button type="button" id="ad-gate-vip-bypass-btn" onclick="closeAdGate(); openVipModal();" class="py-2.5 px-4 rounded-xl bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/40 font-bold text-xs transition">
+              👑 Skip Ads with VIP
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 2: RESOURCE READER & OFFLINE DOWNLOAD VIEWER                    -->
+  <!-- ===================================================================== -->
+  <div id="viewer-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="viewer-title">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 shadow-2xl">
+      <div class="p-5 sm:p-6 border-b border-slate-200 dark:border-slate-800 flex items-start justify-between gap-4 sticky top-0 bg-white dark:bg-slate-900 z-10">
+        <div>
+          <div id="viewer-badges" class="flex flex-wrap items-center gap-1.5 mb-1.5"></div>
+          <h3 id="viewer-title" class="text-lg sm:text-xl font-black text-slate-900 dark:text-white">Title</h3>
+        </div>
+        <button type="button" onclick="closeModal('viewer-modal')" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 font-bold" aria-label="Close">✕</button>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-5">
+        <div id="viewer-meta" class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-xl text-xs"></div>
+
+        <div>
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2">Complete Content / Syllabus / Advertisement Details</h4>
+          <div id="viewer-body" class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200/70 dark:border-slate-700/70"></div>
+        </div>
+
+        <div id="viewer-actions" class="flex flex-col sm:flex-row items-center gap-3 pt-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 3: INTERACTIVE MCQ QUIZ ENGINE                                  -->
+  <!-- ===================================================================== -->
+  <div id="quiz-modal" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="quiz-modal-title">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full max-h-[92vh] overflow-y-auto border border-slate-200 dark:border-slate-800 shadow-2xl">
+      <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4 sticky top-0 bg-white dark:bg-slate-900 z-10">
+        <div>
+          <span id="quiz-category-badge" class="px-2.5 py-0.5 rounded-md text-[11px] font-extrabold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">AGENCY</span>
+          <h3 id="quiz-modal-title" class="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1">Quiz Title</h3>
+        </div>
+        <div class="flex items-center gap-3">
+          <div id="quiz-timer" class="px-3 py-1.5 rounded-xl bg-slate-900 text-emerald-400 font-mono font-bold text-sm">05:00</div>
+          <button type="button" onclick="closeQuizModal()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 font-bold" aria-label="Close quiz">✕</button>
+        </div>
+      </div>
+      <div id="quiz-body" class="p-5 sm:p-6"></div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 4: STUDENT VIP / PAID UNLOCK CHECKOUT                           -->
+  <!-- ===================================================================== -->
+  <div id="vip-modal" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="vip-modal-title">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full max-h-[92vh] overflow-y-auto border border-amber-500/40 shadow-2xl">
+      <div class="p-5 bg-gradient-to-r from-slate-900 to-amber-950 text-white flex items-center justify-between">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-300">Instant Access &amp; Ad-Free</span>
+          <h3 id="vip-modal-title" class="text-xl font-black mt-0.5">👑 All In ONE — VIP Paid Pass</h3>
+        </div>
+        <button type="button" onclick="closeModal('vip-modal')" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold">✕</button>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-5">
+        <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 flex items-center justify-between">
+          <div>
+            <p class="font-extrabold text-slate-900 dark:text-white text-base">All-Access Student VIP Pass</p>
+            <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">Unlock all Paid Books, Past Papers &amp; Skip all Ad Gates</p>
+          </div>
+          <div class="text-right shrink-0">
+            <span class="text-2xl font-black text-amber-600 dark:text-amber-400" id="vip-modal-price-display">Rs. 499</span>
+            <p class="text-[10px] text-slate-500">Full Access</p>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-2">Choose Pakistani Payment Gateway</label>
+          <div class="grid grid-cols-3 gap-2.5">
+            <button type="button" onclick="selectPaymentGateway(this, 'JazzCash')" class="pay-gw-btn p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/30 text-center">
+              <div class="font-extrabold text-xs">JazzCash</div>
+              <div class="text-[10px] text-slate-500">0300-1234567</div>
+            </button>
+            <button type="button" onclick="selectPaymentGateway(this, 'EasyPaisa')" class="pay-gw-btn p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-center">
+              <div class="font-extrabold text-xs">EasyPaisa</div>
+              <div class="text-[10px] text-slate-500">0345-1234567</div>
+            </button>
+            <button type="button" onclick="selectPaymentGateway(this, 'RAAST / Bank')" class="pay-gw-btn p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-center">
+              <div class="font-extrabold text-xs">RAAST / Bank</div>
+              <div class="text-[10px] text-slate-500">Instant IBAN</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <label for="vip-trx-input" class="block text-xs font-bold mb-1">Transaction ID (TID)</label>
+            <input type="text" id="vip-trx-input" placeholder="Enter JazzCash / EasyPaisa TID..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm" />
+          </div>
+          <button type="button" onclick="completeVipPurchase(false)" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow transition">
+            Verify Payment &amp; Unlock Now
+          </button>
+          <button type="button" onclick="completeVipPurchase(true)" class="w-full py-2.5 rounded-xl bg-amber-600/15 hover:bg-amber-600/25 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-bold text-xs transition">
+            ⚡ Instant Demo VIP Unlock (Test Paid Access)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 5: SECRET OWNER LOGIN MODAL (Triggered via Ctrl+Shift+A / #admin / 5-tap logo) -->
+  <!-- ===================================================================== -->
+  <div id="secret-admin-login-modal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="secret-login-title">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 border border-emerald-500/40 shadow-2xl">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-black text-sm">🔐</span>
+          <h3 id="secret-login-title" class="text-lg font-black text-slate-900 dark:text-white">Owner Admin Verification</h3>
+        </div>
+        <button type="button" onclick="closeModal('secret-admin-login-modal')" class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 font-bold">✕</button>
+      </div>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
+        Restricted area for portal owner only. Enter your admin password to manage materials, quizzes, and ad campaigns.
+      </p>
+      <form onsubmit="handleAdminPasswordSubmit(event)" class="space-y-3">
+        <div>
+          <label for="owner-password-input" class="sr-only">Admin Password</label>
+          <input
+            type="password"
+            id="owner-password-input"
+            required
+            autocomplete="current-password"
+            placeholder="Enter Owner Password"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-bold focus:outline-none"
+          />
+        </div>
+        <button type="submit" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow transition">
+          Unlock Owner Control Panel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 6: OWNER ADMIN CONTROL PANEL (Upload + 3-Way Monetization + Ad Campaign Manager) -->
+  <!-- ===================================================================== -->
+  <div id="admin-studio-modal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4" role="dialog" aria-modal="true" aria-labelledby="admin-studio-title">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-5xl w-full max-h-[94vh] overflow-y-auto border border-slate-200 dark:border-slate-800 shadow-2xl">
+      <!-- Header -->
+      <div class="p-5 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-3 sticky top-0 z-10">
+        <div>
+          <h3 id="admin-studio-title" class="text-lg sm:text-xl font-black flex items-center gap-2">
+            <span>🛡️</span> All In ONE — Owner Control Panel
+          </h3>
+          <p class="text-xs text-slate-400">Upload Content • Choose Both/Ad-Only/Paid-Only • Run Custom Ad Campaigns</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="logoutAdmin()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold">Logout</button>
+          <button type="button" onclick="closeModal('admin-studio-modal')" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold">Close ✕</button>
+        </div>
+      </div>
+
+      <!-- Live Earnings & Metrics Strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-5 bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200 dark:border-slate-800">
+        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800">
+          <div class="text-[11px] font-bold text-slate-500">Total Portal Blocks</div>
+          <div id="stat-total-blocks" class="text-xl font-black text-slate-900 dark:text-white mt-0.5">0</div>
+        </div>
+        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800">
+          <div class="text-[11px] font-bold text-slate-500">Ad Campaign Earnings</div>
+          <div id="stat-ad-earnings" class="text-xl font-black text-emerald-600 mt-0.5">Rs. 0</div>
+        </div>
+        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800">
+          <div class="text-[11px] font-bold text-slate-500">Paid / VIP Earnings</div>
+          <div id="stat-paid-earnings" class="text-xl font-black text-amber-600 mt-0.5">Rs. 0</div>
+        </div>
+        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800">
+          <div class="text-[11px] font-bold text-slate-500">Total Combined Revenue</div>
+          <div id="stat-combined-earnings" class="text-xl font-black text-slate-900 dark:text-white mt-0.5">Rs. 0</div>
+        </div>
+      </div>
+
+      <!-- Admin Navigation Tabs -->
+      <div class="px-5 pt-4 border-b border-slate-200 dark:border-slate-800 flex flex-wrap gap-2">
+        <button type="button" onclick="switchAdminTab('upload-material')" id="admin-tab-btn-upload-material" class="admin-tab-btn px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-extrabold bg-emerald-600 text-white">
+          + Upload Ads / Notes / Books / PDFs
+        </button>
+        <button type="button" onclick="switchAdminTab('upload-quiz')" id="admin-tab-btn-upload-quiz" class="admin-tab-btn px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+          + Create Quiz &amp; MCQs
+        </button>
+        <button type="button" onclick="switchAdminTab('ad-campaigns')" id="admin-tab-btn-ad-campaigns" class="admin-tab-btn px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+          📢 Ad Run / Campaign Manager
+        </button>
+        <button type="button" onclick="switchAdminTab('manage-all')" id="admin-tab-btn-manage-all" class="admin-tab-btn px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+          Manage Library &amp; Backup
+        </button>
+      </div>
+
+      <!-- TAB 1: UPLOAD MATERIAL WITH 3-WAY MONETIZATION CHOICE -->
+      <form id="admin-panel-upload-material" onsubmit="handleUploadMaterial(event)" class="p-5 sm:p-6 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="mat-title" class="block text-xs font-extrabold mb-1">Material / Job Ad Title *</label>
+            <input type="text" id="mat-title" required placeholder="e.g. FIA Inspector & AD Solved Guide 2026" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm" />
+          </div>
+          <div>
+            <label for="mat-category" class="block text-xs font-extrabold mb-1">Testing Agency / Force *</label>
+            <select id="mat-category" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm">
+              <option value="FPSC">FPSC</option>
+              <option value="PPSC">PPSC</option>
+              <option value="SPSC">SPSC</option>
+              <option value="BPSC">BPSC</option>
+              <option value="SIBA">SIBA (Sukkur IBA)</option>
+              <option value="NTS">NTS</option>
+              <option value="STS">STS (Sindh Testing Service)</option>
+              <option value="PTS">PTS (Pakistan Testing Service)</option>
+              <option value="FIA">FIA</option>
+              <option value="NCCIA">NCCIA</option>
+              <option value="ICT Police">ICT Police</option>
+              <option value="PST / JEST / SST">PST / JEST / SST</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label for="mat-type" class="block text-xs font-extrabold mb-1">Material Block Type *</label>
+            <select id="mat-type" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm">
+              <option value="Job Ad">📢 Job Advertisement</option>
+              <option value="Notes">📝 Study Notes</option>
+              <option value="Book">📚 Book</option>
+              <option value="PDF">📄 PDF Guide</option>
+              <option value="Past Paper">🗂️ Past Paper</option>
+            </select>
+          </div>
+          <div>
+            <label for="mat-monetization" class="block text-xs font-extrabold mb-1 text-emerald-700 dark:text-emerald-400">Monetization Option (Your Choice) *</label>
+            <select id="mat-monetization" onchange="toggleMaterialPriceField()" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-emerald-500/60 bg-white dark:bg-slate-800 text-sm font-bold">
+              <option value="both">Both (Ad Unlock OR VIP Paid)</option>
+              <option value="ad_only">Sirf Ad (Free with Sponsored Ad)</option>
+              <option value="paid_only">Sirf Paid (VIP / Direct Paid Only)</option>
+            </select>
+          </div>
+          <div id="mat-price-box">
+            <label for="mat-price" class="block text-xs font-extrabold mb-1">Price in PKR (Rs.)</label>
+            <input type="number" id="mat-price" value="250" min="50" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="mat-meta" class="block text-xs font-extrabold mb-1">File Info / Pages / Last Date</label>
+            <input type="text" id="mat-meta" placeholder="e.g. PDF • 120 Pages • 4.5 MB or Last Date: 20 Dec 2026" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm" />
+          </div>
+          <div>
+            <label for="mat-url-or-file" class="block text-xs font-extrabold mb-1">External PDF/Drive Link OR Attach File</label>
+            <div class="flex gap-2">
+              <input type="url" id="mat-external-url" placeholder="https://..." class="w-1/2 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs" />
+              <input type="file" id="mat-file-input" class="w-1/2 text-xs text-slate-500 file:py-2 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700" />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label for="mat-content" class="block text-xs font-extrabold mb-1">Full Syllabus, Job Advertisement Details, or Notes Text *</label>
+          <textarea id="mat-content" rows="4" required placeholder="Enter complete job details, syllabus breakdown, book summary, or study notes..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"></textarea>
+        </div>
+
+        <div class="flex justify-end">
+          <button type="submit" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow transition">
+            ✅ Publish Block to Portal
+          </button>
+        </div>
+      </form>
+
+      <!-- TAB 2: CREATE QUIZ WITH 3-WAY MONETIZATION CHOICE -->
+      <form id="admin-panel-upload-quiz" onsubmit="handleUploadQuiz(event)" class="hidden p-5 sm:p-6 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <div class="sm:col-span-2">
+            <label for="quiz-title-in" class="block text-xs font-extrabold mb-1">Quiz Title *</label>
+            <input type="text" id="quiz-title-in" required placeholder="e.g. NCCIA Cyber Crime & PECA 2016 Mock Test" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm" />
+          </div>
+          <div>
+            <label for="quiz-cat-in" class="block text-xs font-extrabold mb-1">Agency *</label>
+            <select id="quiz-cat-in" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm">
+              <option value="FPSC">FPSC</option>
+              <option value="PPSC">PPSC</option>
+              <option value="SPSC">SPSC</option>
+              <option value="BPSC">BPSC</option>
+              <option value="SIBA">SIBA</option>
+              <option value="NTS">NTS</option>
+              <option value="STS">STS</option>
+              <option value="PTS">PTS</option>
+              <option value="FIA">FIA</option>
+              <option value="NCCIA">NCCIA</option>
+              <option value="ICT Police">ICT Police</option>
+              <option value="PST / JEST / SST">PST / JEST / SST</option>
+            </select>
+          </div>
+          <div>
+            <label for="quiz-monetization-in" class="block text-xs font-extrabold mb-1 text-emerald-600">Access Mode *</label>
+            <select id="quiz-monetization-in" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-emerald-500/60 bg-white dark:bg-slate-800 text-xs font-bold">
+              <option value="both">Both (Ad OR Paid)</option>
+              <option value="ad_only">Sirf Ad (Free + Ad)</option>
+              <option value="paid_only">Sirf Paid (VIP Only)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+          <h4 class="text-xs font-black uppercase text-emerald-600">Add MCQ Question</h4>
+          <input type="text" id="mcq-q-in" placeholder="Question text..." class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm" />
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <input type="text" id="mcq-o0" placeholder="Option A" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm" />
+            <input type="text" id="mcq-o1" placeholder="Option B" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm" />
+            <input type="text" id="mcq-o2" placeholder="Option C" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm" />
+            <input type="text" id="mcq-o3" placeholder="Option D" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm" />
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <select id="mcq-ans-in" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm font-bold">
+              <option value="0">Correct: Option A</option>
+              <option value="1">Correct: Option B</option>
+              <option value="2">Correct: Option C</option>
+              <option value="3">Correct: Option D</option>
+            </select>
+            <input type="text" id="mcq-exp-in" placeholder="Short explanation (optional)" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm" />
+          </div>
+          <button type="button" onclick="stageMcqItem()" class="px-4 py-2 rounded-lg bg-slate-900 dark:bg-slate-700 text-white text-xs font-extrabold">
+            + Add Question (<span id="staged-mcq-count">0</span> added)
+          </button>
+        </div>
+
+        <div class="flex justify-end">
+          <button type="submit" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow">
+            🚀 Publish Quiz Block
+          </button>
+        </div>
+      </form>
+
+      <!-- TAB 3: AD RUN / AD CAMPAIGN MANAGER ("Ad Run Karne Wala Option") -->
+      <div id="admin-panel-ad-campaigns" class="hidden p-5 sm:p-6 space-y-6">
+        <form onsubmit="handleCreateAdCampaign(event)" class="bg-amber-50/60 dark:bg-amber-950/20 border border-amber-300/60 dark:border-amber-800/50 rounded-2xl p-4 sm:p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-black text-slate-900 dark:text-white flex items-center gap-2">
+              <span>📢</span> Create &amp; Run New Ad Campaign
+            </h4>
+            <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-600 text-white">Instant Live Placement</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label for="ad-title-in" class="block text-xs font-extrabold mb-1">Ad Headline *</label>
+              <input type="text" id="ad-title-in" required placeholder="e.g. CSS / PMS 2026 Online Academy Batch" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm" />
+            </div>
+            <div>
+              <label for="ad-sponsor-in" class="block text-xs font-extrabold mb-1">Sponsor / Brand Name *</label>
+              <input type="text" id="ad-sponsor-in" required placeholder="e.g. National Officers Academy" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm" />
+            </div>
+            <div>
+              <label for="ad-placement-in" class="block text-xs font-extrabold mb-1">Ad Placement Slot *</label>
+              <select id="ad-placement-in" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-bold">
+                <option value="all">All Slots (Banner + Grid Block + Unlock Gate)</option>
+                <option value="top_banner">Top Header Banner</option>
+                <option value="grid_block">Inside Unified Material Block Grid</option>
+                <option value="unlock_gate">5-Second Ad Unlock Gate Modal</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label for="ad-desc-in" class="block text-xs font-extrabold mb-1">Ad Description / Offer *</label>
+              <input type="text" id="ad-desc-in" required placeholder="e.g. 50% Discount on Solved Past Papers Bundle" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm" />
+            </div>
+            <div>
+              <label for="ad-link-in" class="block text-xs font-extrabold mb-1">Target URL / WhatsApp Link</label>
+              <input type="url" id="ad-link-in" placeholder="https://wa.me/923001234567" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm" />
+            </div>
+            <div>
+              <label for="ad-rate-in" class="block text-xs font-extrabold mb-1">Earning Rate per Click/Unlock (Rs.)</label>
+              <input type="number" id="ad-rate-in" value="25" min="1" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-end">
+            <div>
+              <label for="ad-img-in" class="block text-xs font-extrabold mb-1">Banner Image URL (Optional)</label>
+              <input type="url" id="ad-img-in" placeholder="https://example.com/banner.jpg (leave blank for styled banner)" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm" />
+            </div>
+            <button type="submit" class="w-full py-2.5 px-5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-black text-sm shadow transition">
+              🚀 Launch Ad Campaign Now
+            </button>
+          </div>
+        </form>
+
+        <!-- Active & Paused Ads List -->
+        <div>
+          <h4 class="text-xs font-black uppercase tracking-wider text-slate-500 mb-3">Running &amp; Paused Ad Campaigns</h4>
+          <div id="admin-ads-list" class="space-y-2.5">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: MANAGE ALL LIBRARY ITEMS & BACKUP -->
+      <div id="admin-panel-manage-all" class="hidden p-5 sm:p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-50 dark:bg-slate-800/60 p-4 rounded-xl">
+          <div>
+            <h4 class="text-sm font-extrabold">Backup &amp; Restore Portal Data</h4>
+            <p class="text-xs text-slate-500">Download a JSON backup of all uploaded materials, quizzes, and ad campaigns.</p>
+          </div>
+          <div class="flex gap-2">
+            <button type="button" onclick="exportBackupJson()" class="px-3.5 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold">⬇️ Export JSON Backup</button>
+            <button type="button" onclick="restoreDefaultPortal()" class="px-3.5 py-2 rounded-xl bg-rose-600/15 text-rose-600 text-xs font-bold">Reset Defaults</button>
+          </div>
+        </div>
+
+        <div id="admin-library-list" class="space-y-2 max-h-80 overflow-y-auto pr-1">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ===================================================================== -->
+  <!-- JAVASCRIPT APPLICATION ENGINE                                         -->
+  <!-- ===================================================================== -->
+  <script>
+    // SECRET OWNER PASSWORD
+    const OWNER_PASSWORD = 'Fayaz@110';
+
+    // TESTING AGENCIES & FORCES
+    const AGENCIES = [
+      { id: 'ALL', name: 'All Agencies', icon: '🌐' },
+      { id: 'FPSC', name: 'FPSC', icon: '🏛️' },
+      { id: 'PPSC', name: 'PPSC', icon: '🌾' },
+      { id: 'SPSC', name: 'SPSC', icon: '🕌' },
+      { id: 'BPSC', name: 'BPSC', icon: '⛰️' },
+      { id: 'SIBA', name: 'SIBA', icon: '🎓' },
+      { id: 'NTS', name: 'NTS', icon: '📋' },
+      { id: 'STS', name: 'STS', icon: '📑' },
+      { id: 'PTS', name: 'PTS', icon: '✅' },
+      { id: 'FIA', name: 'FIA', icon: '🕵️' },
+      { id: 'NCCIA', name: 'NCCIA', icon: '🛡️' },
+      { id: 'ICT Police', name: 'ICT Police', icon: '🚓' },
+      { id: 'PST / JEST / SST', name: 'PST/JEST/SST', icon: '👩‍🏫' }
+    ];
+
+    // DEFAULT PRE-LOADED MATERIALS (Demonstrating Both, Ad-Only, and Paid-Only)
+    const DEFAULT_MATERIALS = [
+      {
+        id: 'mat-1',
+        title: 'FIA Inspector, Assistant Director & ASI Recruitment 2026 + Complete Syllabus',
+        category: 'FIA',
+        type: 'Job Ad',
+        monetization: 'ad_only',
+        price: 0,
+        date: '2026-11-27',
+        meta: 'Adv # 11/2026 • Last Date: 18 Dec 2026',
+        externalUrl: '',
+        summary: 'Official Federal Investigation Agency (FIA) advertisement for Assistant Director (BS-17), Inspector Investigation (BS-16), and ASI posts with complete paper pattern.',
+        content: `FEDERAL INVESTIGATION AGENCY (FIA) RECRUITMENT 2026\n\n1. Assistant Director Investigation (BS-17)\n- Qualification: Second Class Master's / BS (16 Years).\n- Age Limit: 22-28 Years + 5 Years General Age Relaxation.\n\n2. Inspector Investigation (BS-16)\n- Qualification: Bachelor's Degree from HEC recognized university.\n- Physical Standards: Male Height 5'6", Female Height 5'2".\n\n3. Written Test Paper Pattern:\n- English: 20% | General Intelligence: 20% | Pak Affairs & Current Affairs: 20% | Islamiat: 15% | FIA Act 1974 & Computer: 25%.`
+      },
+      {
+        id: 'mat-2',
+        title: 'NCCIA Cyber Crime Investigation Officer — PECA 2016 & Digital Forensics Book',
+        category: 'NCCIA',
+        type: 'Book',
+        monetization: 'both',
+        price: 350,
+        date: '2026-11-26',
+        meta: 'Book PDF • 210 Pages • 8.4 MB',
+        externalUrl: '',
+        summary: 'Complete preparation guide for National Cyber Crime Investigation Agency (NCCIA). Unlock FREE via Sponsored Ad or get instant VIP access.',
+        content: `NCCIA COMPLETE CYBER CRIME & DIGITAL FORENSICS HANDBOOK\n\nChapter 1: Mandate of NCCIA (National Cyber Crime Investigation Agency)\nChapter 2: Prevention of Electronic Crimes Act (PECA 2016) Sections 3 to 24\nChapter 3: Network Security, Firewalls, OSINT & IP Tracing\nChapter 4: 500+ Solved Cyber Security & Computer Science MCQs.`
+      },
+      {
+        id: 'mat-3',
+        title: 'SPSC Secondary School Teacher (SST) & Lecturer Solved Past Papers (2018–2026)',
+        category: 'SPSC',
+        type: 'Past Paper',
+        monetization: 'paid_only',
+        price: 400,
+        date: '2026-11-25',
+        meta: 'VIP Solved Compilation • 260 Pages',
+        externalUrl: '',
+        summary: 'Exclusive VIP solved past papers for Sindh Public Service Commission (SPSC) SST General, SST Science, and Municipal Officer exams.',
+        content: `SPSC SOLVED PAST PAPERS COMPILATION (VIP EXCLUSIVE)\n\n- SPSC SST General Category Original Solved Paper\n- SPSC SST Science Category Original Solved Paper\n- Sindh History, Geography, Shah Abdul Latif Bhittai & Sindhi Literature Notes.`
+      },
+      {
+        id: 'mat-4',
+        title: 'FPSC One-Paper MCQs Encyclopedia (10,000+ Solved Questions PDF)',
+        category: 'FPSC',
+        type: 'PDF',
+        monetization: 'both',
+        price: 450,
+        date: '2026-11-24',
+        meta: 'PDF Encyclopedia • 540 Pages • 19.2 MB',
+        externalUrl: '',
+        summary: 'All-in-One screening test PDF for FPSC AD, Inspector ASF, Custom Inspector, and Preventive Officer. Available via Ad Unlock or VIP.',
+        content: `FPSC ONE-PAPER SCREENING TEST ENCYCLOPEDIA\n\n1. Pakistan Movement & Constitutional History (1857–2026)\n2. World Geography, Capitals, Currencies & Straits\n3. Everyday Science & Basic Arithmetic\n4. English Synonyms, Antonyms & Prepositions.`
+      },
+      {
+        id: 'mat-5',
+        title: 'PPSC Tehsildar, Naib Tehsildar & PMS General Knowledge Master Notes',
+        category: 'PPSC',
+        type: 'Notes',
+        monetization: 'ad_only',
+        price: 0,
+        date: '2026-11-24',
+        meta: 'Study Notes • 96 Pages • 3.8 MB',
+        externalUrl: '',
+        summary: 'High-yield PPSC GK, Urdu Adab, Punjab Land Revenue Act, and Geography notes compiled from recent Punjab Public Service Commission papers.',
+        content: `PPSC MASTER PREPARATION NOTES\n\n- Punjab Land Revenue Act 1967 Important Sections\n- Famous Urdu Poets, Books & Takhallus\n- Rivers, Barrages, Doabs & Canal System of Punjab.`
+      },
+      {
+        id: 'mat-6',
+        title: 'ICT Police ASI & Constable Jobs + Physical & Written Test Guide',
+        category: 'ICT Police',
+        type: 'Job Ad',
+        monetization: 'ad_only',
+        price: 0,
+        date: '2026-11-27',
+        meta: 'Islamabad Capital Territory Police • BPS-07 to BPS-11',
+        externalUrl: '',
+        summary: 'Latest vacancies in Islamabad Capital Territory (ICT) Police with running standards, chest criteria, and written test syllabus.',
+        content: `ISLAMABAD CAPITAL TERRITORY (ICT) POLICE JOBS\n\nPosts: Assistant Sub-Inspector (BPS-11) & Constable (BPS-07)\nPhysical Test: 1.6 KM run in 7 minutes (Male), 10 minutes (Female).\nWritten Test: English, GK, Pak Studies, Islamiat & IQ.`
+      },
+      {
+        id: 'mat-7',
+        title: 'SIBA (Sukkur IBA) & STS BPS-05 to BPS-15 Screening Test Complete Book',
+        category: 'SIBA',
+        type: 'Book',
+        monetization: 'both',
+        price: 300,
+        date: '2026-11-22',
+        meta: 'Book PDF • 185 Pages • 6.5 MB',
+        externalUrl: '',
+        summary: 'Tailored for Sukkur IBA Testing Services (SIBA) and Sindh Testing Service (STS) graduation & intermediate category tests.',
+        content: `SIBA & STS SCREENING TEST COMPLETE BOOK\n\n- English Reading Comprehension & Vocabulary (40 Marks)\n- Mathematics & Word Problems (20 Marks)\n- General Knowledge, Everyday Science & Computer (40 Marks).`
+      },
+      {
+        id: 'mat-8',
+        title: 'NTS NAT / GAT General & PTS Analytical Reasoning Solved Past Papers',
+        category: 'NTS',
+        type: 'Past Paper',
+        monetization: 'ad_only',
+        price: 0,
+        date: '2026-11-21',
+        meta: 'Solved Past Papers • 84 Pages',
+        externalUrl: '',
+        summary: 'Solved Analytical Logic Games, Quantitative Math, and Verbal Reasoning past papers for NTS and Pakistan Testing Service (PTS).',
+        content: `NTS & PTS SOLVED ANALYTICAL & QUANTITATIVE PAPERS\n\nIncludes step-by-step solutions for seating arrangements, grouping logic, ratios, percentages, and analogies.`
+      },
+      {
+        id: 'mat-9',
+        title: 'BPSC Assistant Commissioner & Section Officer Complete Guide',
+        category: 'BPSC',
+        type: 'PDF',
+        monetization: 'paid_only',
+        price: 350,
+        date: '2026-11-20',
+        meta: 'VIP PDF Guide • 290 Pages',
+        externalUrl: '',
+        summary: 'Balochistan Public Service Commission (BPSC) preparation PDF covering Balochistan geography, mineral resources, CPEC, and Essay writing.',
+        content: `BPSC COMPETITIVE EXAMS HANDBOOK\n\nCovers Districts, Mountain Passes, Coastal Belt of Balochistan, Civil Servants Act, and Solved Past Papers.`
+      },
+      {
+        id: 'mat-10',
+        title: 'STS & PTS Sindh Textbook Board Class 4–10 Science & Social Studies Notes',
+        category: 'STS',
+        type: 'Notes',
+        monetization: 'both',
+        price: 200,
+        date: '2026-11-25',
+        meta: 'Notes PDF • 110 Pages',
+        externalUrl: '',
+        summary: 'Essential Sindh Textbook Board MCQs and summary notes for STS, PTS, and PST/JEST candidates.',
+        content: `SINDH TEXTBOOK BOARD MASTER NOTES (CLASS 4 TO 10)\n\nKey Science concepts, human organ systems, solar system, Pakistan geography, and civics.`
+      }
+    ];
+
+    const DEFAULT_QUIZZES = [
+      {
+        id: 'quiz-1',
+        title: 'FIA & NCCIA Cyber Law + General Intelligence Mock Quiz',
+        category: 'NCCIA',
+        monetization: 'both',
+        price: 200,
+        durationMinutes: 5,
+        questions: [
+          {
+            q: 'Which Act governs cyber crime investigation under NCCIA in Pakistan?',
+            options: [
+              'Prevention of Electronic Crimes Act (PECA) 2016',
+              'Telecom Act 1996',
+              'Electronic Transactions Ordinance 2002',
+              'Cyber Policy 2010'
+            ],
+            correct: 0,
+            exp: 'PECA 2016 is the primary cyber crime law enforced by NCCIA.'
+          },
+          {
+            q: 'In which year was the Federal Investigation Agency (FIA) Act promulgated?',
+            options: ['1972', '1974', '1975', '1979'],
+            correct: 1,
+            exp: 'The FIA Act was promulgated in 1974.'
+          },
+          {
+            q: 'Which cryptographic hash function generates a 256-bit digest for digital evidence?',
+            options: ['MD5', 'SHA-1', 'SHA-256', 'CRC32'],
+            correct: 2,
+            exp: 'SHA-256 produces a 256-bit collision-resistant hash.'
+          }
+        ]
+      },
+      {
+        id: 'quiz-2',
+        title: 'FPSC, PPSC & SPSC One-Paper Pakistan Affairs & GK Test',
+        category: 'FPSC',
+        monetization: 'ad_only',
+        price: 0,
+        durationMinutes: 5,
+        questions: [
+          {
+            q: 'Who moved the historic Lahore Resolution on 23rd March 1940?',
+            options: ['Quaid-e-Azam', 'A.K. Fazlul Huq', 'Liaquat Ali Khan', 'Allama Iqbal'],
+            correct: 1,
+            exp: 'A.K. Fazlul Huq presented the Lahore Resolution on March 23, 1940.'
+          },
+          {
+            q: 'Which mountain pass connects Pakistan with China?',
+            options: ['Khyber Pass', 'Bolan Pass', 'Khunjerab Pass', 'Lowari Pass'],
+            correct: 2,
+            exp: 'Khunjerab Pass connects Gilgit-Baltistan with Xinjiang, China.'
+          }
+        ]
+      },
+      {
+        id: 'quiz-3',
+        title: 'SIBA, STS & PTS VIP English & Everyday Science Mock Test',
+        category: 'SIBA',
+        monetization: 'paid_only',
+        price: 250,
+        durationMinutes: 5,
+        questions: [
+          {
+            q: 'Choose the correct synonym of "METICULOUS":',
+            options: ['Careless', 'Thorough and precise', 'Hasty', 'Vague'],
+            correct: 1,
+            exp: 'Meticulous means showing great attention to detail.'
+          },
+          {
+            q: 'Which vitamin is produced in human skin by sunlight?',
+            options: ['Vitamin A', 'Vitamin B12', 'Vitamin C', 'Vitamin D'],
+            correct: 3,
+            exp: 'UVB sunlight triggers Vitamin D synthesis in human skin.'
+          }
+        ]
+      }
+    ];
+
+    // DEFAULT ACTIVE AD CAMPAIGNS (Manageable in Admin Ad Run Manager)
+    const DEFAULT_ADS = [
+      {
+        id: 'ad-101',
+        title: 'CSS / PMS & FPSC One-Paper 2026 Live Preparation Batch',
+        sponsor: 'National Officers Academy (NOA)',
+        desc: 'Join Live Zoom + Recorded Lectures with Solved 10-Year Past Papers & Weekly Mock Tests.',
+        placement: 'all',
+        link: 'https://example.com',
+        imageUrl: '',
+        ratePkr: 30,
+        impressions: 420,
+        clicks: 48,
+        active: true
+      },
+      {
+        id: 'ad-102',
+        title: 'All-in-One Solved Past Papers Hardcopy Books (Cash on Delivery)',
+        sponsor: 'Ilmi Kitab Khana Pakistan',
+        desc: 'Order FPSC, PPSC, SPSC, FIA & NCCIA Original Solved Books delivered anywhere in Pakistan.',
+        placement: 'grid_block',
+        link: 'https://example.com',
+        imageUrl: '',
+        ratePkr: 25,
+        impressions: 310,
+        clicks: 34,
+        active: true
+      }
+    ];
+
+    // APPLICATION STATE
+    let state = {
+      materials: [],
+      quizzes: [],
+      ads: [],
+      selectedCategory: 'ALL',
+      selectedType: 'ALL',
+      selectedMonetization: 'ALL',
+      searchQuery: '',
+      isVipStudent: false,
+      isAdminAuthenticated: false,
+      vipSalesCount: 42,
+      fontScale: 1,
+      stagedMcqs: [],
+      // Pending unlock target for Ad Gate
+      pendingUnlockTarget: null,
+      adGateInterval: null,
+      // Active Quiz State
+      activeQuiz: null,
+      quizIdx: 0,
+      quizAnswers: [],
+      quizSeconds: 300,
+      quizTimer: null
+    };
+
+    // PERSISTENCE
+    function loadState() {
+      try {
+        const m = localStorage.getItem('aio_materials_v2');
+        const q = localStorage.getItem('aio_quizzes_v2');
+        const a = localStorage.getItem('aio_ads_v2');
+        const v = localStorage.getItem('aio_vip_v2');
+        const s = localStorage.getItem('aio_vip_sales_v2');
+        const adm = sessionStorage.getItem('aio_admin_auth_v2');
+        const theme = localStorage.getItem('aio_theme_v2');
+
+        state.materials = m ? JSON.parse(m) : [...DEFAULT_MATERIALS];
+        state.quizzes = q ? JSON.parse(q) : [...DEFAULT_QUIZZES];
+        state.ads = a ? JSON.parse(a) : [...DEFAULT_ADS];
+        state.isVipStudent = v === 'true';
+        state.vipSalesCount = s ? Number(s) : 42;
+        state.isAdminAuthenticated = adm === 'true';
+
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {
+        state.materials = [...DEFAULT_MATERIALS];
+        state.quizzes = [...DEFAULT_QUIZZES];
+        state.ads = [...DEFAULT_ADS];
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem('aio_materials_v2', JSON.stringify(state.materials));
+        localStorage.setItem('aio_quizzes_v2', JSON.stringify(state.quizzes));
+        localStorage.setItem('aio_ads_v2', JSON.stringify(state.ads));
+        localStorage.setItem('aio_vip_v2', String(state.isVipStudent));
+        localStorage.setItem('aio_vip_sales_v2', String(state.vipSalesCount));
+      } catch (e) {
+        console.error('Save state failed:', e);
+      }
+    }
+
+    // INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      updateThemeUI();
+      updateVipStudentUI();
+      updateAdminVisibility();
+      renderAgencyGrid();
+      renderTopAdBanner();
+      applyFilters();
+
+      // Check secret URL hash (#admin)
+      if (window.location.hash === '#admin') {
+        openSecretAdminLogin();
+      }
+    });
+
+    // SECRET ADMIN TRIGGERS (Invisible to Regular Students)
+    // 1. Keyboard shortcut: Ctrl + Shift + A (or Alt + A)
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) || (e.altKey && (e.key === 'A' || e.key === 'a'))) {
+        e.preventDefault();
+        if (state.isAdminAuthenticated) {
+          openAdminStudio('upload-material');
+        } else {
+          openSecretAdminLogin();
+        }
+      }
+    });
+
+    // 2. Hash change (#admin)
+    window.addEventListener('hashchange', () => {
+      if (window.location.hash === '#admin') {
+        openSecretAdminLogin();
+      }
+    });
+
+    // 3. 5 Quick Taps/Clicks on Brand Logo
+    let logoTapCount = 0;
+    let logoTapTimer = null;
+    function handleLogoSecretTap() {
+      logoTapCount += 1;
+      clearTimeout(logoTapTimer);
+      if (logoTapCount >= 5) {
+        logoTapCount = 0;
+        if (state.isAdminAuthenticated) {
+          openAdminStudio('upload-material');
+        } else {
+          openSecretAdminLogin();
+        }
+        return;
+      }
+      logoTapTimer = setTimeout(() => {
+        if (logoTapCount === 1) {
+          resetAllFilters();
+        }
+        logoTapCount = 0;
+      }, 650);
+    }
+
+    function openSecretAdminLogin() {
+      document.getElementById('owner-password-input').value = '';
+      document.getElementById('secret-admin-login-modal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('owner-password-input').focus(), 100);
+    }
+
+    function handleAdminPasswordSubmit(e) {
+      e.preventDefault();
+      const entered = document.getElementById('owner-password-input').value;
+      if (entered === OWNER_PASSWORD) {
+        state.isAdminAuthenticated = true;
+        sessionStorage.setItem('aio_admin_auth_v2', 'true');
+        closeModal('secret-admin-login-modal');
+        updateAdminVisibility();
+        openAdminStudio('upload-material');
+        showToast('🔓 Welcome Owner! Admin Studio & Ad Manager Unlocked.');
+      } else {
+        showToast('❌ Incorrect Owner Password!');
+        document.getElementById('owner-password-input').value = '';
+      }
+    }
+
+    function logoutAdmin() {
+      state.isAdminAuthenticated = false;
+      sessionStorage.removeItem('aio_admin_auth_v2');
+      if (window.location.hash === '#admin') {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+      closeModal('admin-studio-modal');
+      updateAdminVisibility();
+      showToast('🔒 Logged out of Admin Session.');
+    }
+
+    function updateAdminVisibility() {
+      const bar = document.getElementById('owner-admin-bar');
+      if (state.isAdminAuthenticated) {
+        bar.classList.remove('hidden');
+      } else {
+        bar.classList.add('hidden');
+      }
+    }
+
+    // ACCESSIBILITY & THEME CONTROLS
+    function adjustFontSize(delta) {
+      state.fontScale = Math.min(1.25, Math.max(0.85, +(state.fontScale + delta).toFixed(2)));
+      document.documentElement.style.setProperty('--font-scale', state.fontScale);
+      showToast(`Text scale: ${Math.round(state.fontScale * 100)}%`);
+    }
+
+    function resetFontSize() {
+      state.fontScale = 1;
+      document.documentElement.style.setProperty('--font-scale', 1);
+      showToast('Text scale reset to 100%');
+    }
+
+    function toggleHighContrast() {
+      document.body.classList.toggle('high-contrast');
+      showToast(document.body.classList.contains('high-contrast') ? 'High Contrast Mode ON' : 'High Contrast Mode OFF');
+    }
+
+    function toggleDarkMode() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('aio_theme_v2', isDark ? 'dark' : 'light');
+      updateThemeUI();
+    }
+
+    function updateThemeUI() {
+      const isDark = document.documentElement.classList.contains('dark');
+      document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+      document.getElementById('theme-label').textContent = isDark ? 'Light' : 'Dark';
+    }
+
+    // TOP BANNER AD RENDERING
+    function renderTopAdBanner() {
+      const container = document.getElementById('top-ad-banner-container');
+      const activeTopAds = state.ads.filter(a => a.active && (a.placement === 'top_banner' || a.placement === 'all'));
+
+      if (state.isVipStudent || activeTopAds.length === 0) {
+        container.classList.add('hidden');
+        return;
+      }
+
+      container.classList.remove('hidden');
+      const ad = activeTopAds[0];
+      ad.impressions += 1;
+      saveState();
+
+      container.innerHTML = `
+        <div class="max-w-6xl mx-auto rounded-2xl border border-dashed border-amber-400/70 bg-white dark:bg-slate-800/90 p-3 sm:px-5 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
+          <div class="flex items-center gap-3">
+            <span class="px-2 py-0.5 text-[10px] font-black uppercase tracking-wider bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300 rounded">Sponsored Ad</span>
+            <div>
+              <p class="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">${escapeHtml(ad.title)}</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400">${escapeHtml(ad.desc)} • <span class="font-semibold text-emerald-600">${escapeHtml(ad.sponsor)}</span></p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" onclick="recordAdClick('${ad.id}')" class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold transition">
+              Open Offer ↗
+            </button>
+            <button type="button" onclick="openVipModal()" class="px-2.5 py-1.5 rounded-xl text-[11px] font-bold text-amber-700 dark:text-amber-400 hover:underline">
+              Remove Ads
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function recordAdClick(adId) {
+      const ad = state.ads.find(a => a.id === adId);
+      if (ad) {
+        ad.clicks += 1;
+        saveState();
+        updateAdminStats();
+        if (ad.link && ad.link !== 'https://example.com') {
+          window.open(ad.link, '_blank', 'noopener');
+        }
+        showToast(`Visited Sponsor: ${ad.sponsor}`);
+      }
+    }
+
+    // AGENCY BLOCK GRID & FILTERS
+    function renderAgencyGrid() {
+      const grid = document.getElementById('category-block-grid');
+      grid.innerHTML = AGENCIES.map(ag => {
+        const active = state.selectedCategory === ag.id;
+        return `
+          <button
+            type="button"
+            onclick="selectCategory('${ag.id}')"
+            class="flex items-center gap-2 px-3 py-2.5 rounded-xl border text-left transition ${
+              active
+                ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                : 'bg-slate-50 dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-emerald-500'
+            }"
+          >
+            <span class="text-base shrink-0" aria-hidden="true">${ag.icon}</span>
+            <span class="font-extrabold text-xs truncate">${ag.name}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectCategory(catId) {
+      state.selectedCategory = catId;
+      renderAgencyGrid();
+      applyFilters();
+    }
+
+    function setTypeFilter(type) {
+      state.selectedType = type;
+      document.querySelectorAll('.type-pill').forEach(btn => {
+        const active = btn.dataset.type === type;
+        btn.className = active
+          ? 'type-pill px-3.5 py-2 rounded-xl text-xs font-extrabold bg-slate-900 text-white dark:bg-emerald-600 transition'
+          : 'type-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition';
+      });
+      applyFilters();
+    }
+
+    function quickFilterType(type) {
+      setTypeFilter(type);
+      document.getElementById('main-content').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function clearSearch() {
+      document.getElementById('global-search').value = '';
+      applyFilters();
+    }
+
+    function resetAllFilters() {
+      state.selectedCategory = 'ALL';
+      state.selectedType = 'ALL';
+      document.getElementById('global-search').value = '';
+      document.getElementById('monetization-filter').value = 'ALL';
+      renderAgencyGrid();
+      setTypeFilter('ALL');
+    }
+
+    function applyFilters() {
+      const searchEl = document.getElementById('global-search');
+      const clearBtn = document.getElementById('clear-search-btn');
+      state.searchQuery = searchEl.value.trim().toLowerCase();
+      state.selectedMonetization = document.getElementById('monetization-filter').value;
+
+      if (state.searchQuery) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+
+      // Normalize Quizzes into Unified Block Items so EVERYTHING appears together in ONE grid
+      const quizBlocks = state.quizzes.map(q => ({
+        id: q.id,
+        title: q.title,
+        category: q.category,
+        type: 'Quiz',
+        monetization: q.monetization,
+        price: q.price || 200,
+        date: '2026-11-27',
+        meta: `${q.questions.length} MCQs • ${q.durationMinutes} Mins Timed Test`,
+        summary: `Interactive online practice test for ${q.category} with instant score breakdown & explanations.`,
+        isQuiz: true
+      }));
+
+      const unifiedList = [...state.materials, ...quizBlocks];
+
+      const filtered = unifiedList.filter(item => {
+        const matchCat = state.selectedCategory === 'ALL' || item.category === state.selectedCategory;
+        const matchType = state.selectedType === 'ALL' || item.type === state.selectedType;
+        const matchMon = state.selectedMonetization === 'ALL' || item.monetization === state.selectedMonetization;
+        const matchSearch = !state.searchQuery ||
+          item.title.toLowerCase().includes(state.searchQuery) ||
+          item.category.toLowerCase().includes(state.searchQuery) ||
+          item.type.toLowerCase().includes(state.searchQuery) ||
+          item.summary.toLowerCase().includes(state.searchQuery);
+
+        return matchCat && matchType && matchMon && matchSearch;
+      });
+
+      renderUnifiedBlockGrid(filtered);
+    }
+
+    // RENDER UNIFIED BLOCK GRID (ALL MATERIALS, JOB ADS, BOOKS, QUIZZES + SPONSORED GRID BLOCKS)
+    function renderUnifiedBlockGrid(items) {
+      const grid = document.getElementById('unified-block-grid');
+      const emptyState = document.getElementById('empty-state');
+      const countBadge = document.getElementById('results-count-badge');
+
+      countBadge.textContent = `${items.length} ${items.length === 1 ? 'Block' : 'Blocks'} Available`;
+
+      if (items.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      const typeIcons = {
+        'Job Ad': '📢',
+        'Notes': '📝',
+        'Book': '📚',
+        'PDF': '📄',
+        'Past Paper': '🗂️',
+        'Quiz': '🧠'
+      };
+
+      const activeGridAds = state.ads.filter(a => a.active && (a.placement === 'grid_block' || a.placement === 'all'));
+      let html = '';
+
+      items.forEach((item, index) => {
+        // Determine 3-way Monetization Badge & Button
+        let accessBadge = '';
+        let actionButtonsHtml = '';
+
+        if (item.monetization === 'ad_only') {
+          accessBadge = `<span class="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">📺 Free • Ad Supported</span>`;
+          actionButtonsHtml = `
+            <button type="button" onclick="initiateItemAccess('${item.id}', ${!!item.isQuiz}, 'ad')" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm shadow-sm transition">
+              ${item.isQuiz ? '▶️ Unlock & Start Quiz (Free Ad)' : '📖 View & Download (Free Ad)'}
+            </button>
+          `;
+        } else if (item.monetization === 'paid_only') {
+          accessBadge = state.isVipStudent
+            ? `<span class="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-100 text-emerald-800">👑 VIP Unlocked</span>`
+            : `<span class="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">🔒 VIP Paid • Rs. ${item.price}</span>`;
+
+          actionButtonsHtml = state.isVipStudent
+            ? `<button type="button" onclick="openUnlockedDirect('${item.id}', ${!!item.isQuiz})" class="w-full py-2.5 px-4 rounded-xl bg-slate-900 dark:bg-emerald-600 text-white font-extrabold text-xs sm:text-sm shadow-sm transition">
+                ${item.isQuiz ? '▶️ Start VIP Quiz' : '📖 Open VIP Material'}
+              </button>`
+            : `<button type="button" onclick="openVipModal(${item.price})" class="w-full py-2.5 px-4 rounded-xl vip-shimmer text-white font-extrabold text-xs sm:text-sm shadow-sm transition">
+                👑 Unlock Paid VIP (Rs. ${item.price})
+              </button>`;
+        } else {
+          // BOTH (Ad Unlock OR Paid VIP)
+          accessBadge = state.isVipStudent
+            ? `<span class="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-100 text-emerald-800">👑 VIP Instant</span>`
+            : `<span class="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300">⚡ Free Ad OR Paid VIP</span>`;
+
+          if (state.isVipStudent) {
+            actionButtonsHtml = `
+              <button type="button" onclick="openUnlockedDirect('${item.id}', ${!!item.isQuiz})" class="w-full py-2.5 px-4 rounded-xl bg-slate-900 dark:bg-emerald-600 text-white font-extrabold text-xs sm:text-sm shadow-sm transition">
+                ${item.isQuiz ? '▶️ Start Instant Quiz' : '📖 Open & Download Instant'}
+              </button>
+            `;
+          } else {
+            actionButtonsHtml = `
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="initiateItemAccess('${item.id}', ${!!item.isQuiz}, 'ad')" class="py-2.5 px-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition text-center">
+                  📺 Free (Watch Ad)
+                </button>
+                <button type="button" onclick="openVipModal(${item.price})" class="py-2.5 px-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs transition text-center">
+                  👑 Paid (Rs.${item.price})
+                </button>
+              </div>
+            `;
+          }
+        }
+
+        html += `
+          <article class="hc-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm hover:shadow-lg hover:border-emerald-500/60 transition flex flex-col justify-between">
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-slate-900 text-white dark:bg-slate-800 dark:text-emerald-400">
+                    ${escapeHtml(item.category)}
+                  </span>
+                  <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                    ${typeIcons[item.type] || '📄'} ${escapeHtml(item.type)}
+                  </span>
+                </div>
+                ${accessBadge}
+              </div>
+
+              <h3 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white leading-snug mb-2">
+                ${escapeHtml(item.title)}
+              </h3>
+
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-3 mb-4 leading-relaxed">
+                ${escapeHtml(item.summary)}
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-3">
+              <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
+                <span class="truncate max-w-[70%]">📌 ${escapeHtml(item.meta)}</span>
+                <span>${item.date}</span>
+              </div>
+              ${actionButtonsHtml}
+            </div>
+          </article>
+        `;
+
+        // Inject Sponsored Ad Block inside Unified Grid every 5 blocks (if not VIP and active grid ad exists)
+        if (!state.isVipStudent && activeGridAds.length > 0 && (index + 1) % 5 === 0) {
+          const ad = activeGridAds[Math.floor(index / 5) % activeGridAds.length];
+          ad.impressions += 1;
+          html += `
+            <article class="rounded-2xl border-2 border-dashed border-amber-400/80 bg-gradient-to-br from-amber-50/80 to-white dark:from-amber-950/30 dark:to-slate-900 p-5 shadow-sm flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="px-2.5 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950">Sponsored Block</span>
+                  <span class="text-xs font-bold text-amber-700 dark:text-amber-400">${escapeHtml(ad.sponsor)}</span>
+                </div>
+                ${ad.imageUrl ? `<img src="${escapeHtml(ad.imageUrl)}" alt="${escapeHtml(ad.title)}" onerror="this.style.display='none'" class="w-full h-28 object-cover rounded-xl mb-3" />` : ''}
+                <h3 class="text-base font-black text-slate-900 dark:text-white leading-snug mb-2">${escapeHtml(ad.title)}</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">${escapeHtml(ad.desc)}</p>
+              </div>
+              <div class="pt-3 border-t border-amber-200/60 dark:border-amber-800/40 flex items-center justify-between gap-2">
+                <button type="button" onclick="recordAdClick('${ad.id}')" class="flex-1 py-2.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs transition">
+                  Visit Sponsor ↗
+                </button>
+                <button type="button" onclick="openVipModal()" class="py-2.5 px-3 rounded-xl text-[11px] font-bold text-slate-600 dark:text-slate-300 hover:underline">
+                  Hide Ads
+                </button>
+              </div>
+            </article>
+          `;
+        }
+      });
+
+      saveState();
+      grid.innerHTML = html;
+    }
+
+    // 5-SECOND SPONSORED AD UNLOCK GATE LOGIC
+    function initiateItemAccess(id, isQuiz, mode) {
+      if (state.isVipStudent) {
+        openUnlockedDirect(id, isQuiz);
+        return;
+      }
+
+      // Open 5-second Ad Gate
+      state.pendingUnlockTarget = { id, isQuiz };
+      const gateAds = state.ads.filter(a => a.active && (a.placement === 'unlock_gate' || a.placement === 'all'));
+      const ad = gateAds.length > 0 ? gateAds[Math.floor(Math.random() * gateAds.length)] : DEFAULT_ADS[0];
+
+      if (ad) {
+        ad.impressions += 1;
+        saveState();
+        updateAdminStats();
+      }
+
+      document.getElementById('ad-gate-creative').innerHTML = `
+        <div class="bg-gradient-to-br from-slate-900 to-emerald-950 text-white p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-300">${escapeHtml(ad.sponsor)}</span>
+            <span class="text-[11px] bg-white/10 px-2 py-0.5 rounded">Ad Revenue Supports Free Notes</span>
+          </div>
+          ${ad.imageUrl ? `<img src="${escapeHtml(ad.imageUrl)}" alt="Sponsor" onerror="this.style.display='none'" class="w-full h-32 object-cover rounded-xl mb-3" />` : ''}
+          <h4 class="text-base sm:text-lg font-black leading-snug">${escapeHtml(ad.title)}</h4>
+          <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">${escapeHtml(ad.desc)}</p>
+          <button type="button" onclick="recordAdClick('${ad.id}')" class="mt-3 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-extrabold text-xs hover:bg-amber-400">
+            Learn More ↗
+          </button>
+        </div>
+      `;
+
+      let secondsLeft = 5;
+      const numEl = document.getElementById('ad-countdown-num');
+      const barEl = document.getElementById('ad-countdown-bar');
+      const proceedBtn = document.getElementById('ad-gate-proceed-btn');
+      const statusText = document.getElementById('ad-gate-status-text');
+
+      numEl.textContent = secondsLeft;
+      barEl.style.width = '0%';
+      proceedBtn.disabled = true;
+      proceedBtn.textContent = `Wait ${secondsLeft}s to Unlock Free...`;
+      statusText.innerHTML = `Please view this sponsor message for <span id="ad-countdown-num" class="text-emerald-600 font-black text-base">${secondsLeft}</span> seconds to unlock for FREE...`;
+
+      document.getElementById('ad-gate-modal').classList.remove('hidden');
+
+      clearInterval(state.adGateInterval);
+      state.adGateInterval = setInterval(() => {
+        secondsLeft -= 1;
+        const pct = ((5 - secondsLeft) / 5) * 100;
+        barEl.style.width = `${pct}%`;
+
+        if (secondsLeft > 0) {
+          const n = document.getElementById('ad-countdown-num');
+          if (n) n.textContent = secondsLeft;
+          proceedBtn.textContent = `Wait ${secondsLeft}s to Unlock Free...`;
+        } else {
+          clearInterval(state.adGateInterval);
+          if (ad) {
+            ad.clicks += 1;
+            saveState();
+            updateAdminStats();
+          }
+          statusText.innerHTML = `<span class="text-emerald-600 font-extrabold">✅ Ad Completed! Your study block is now unlocked.</span>`;
+          proceedBtn.disabled = false;
+          proceedBtn.textContent = '🚀 Open Unlocked Material Now';
+        }
+      }, 1000);
+    }
+
+    function completeAdGateUnlock() {
+      clearInterval(state.adGateInterval);
+      closeModal('ad-gate-modal');
+      if (state.pendingUnlockTarget) {
+        const { id, isQuiz } = state.pendingUnlockTarget;
+        state.pendingUnlockTarget = null;
+        openUnlockedDirect(id, isQuiz);
+      }
+    }
+
+    function closeAdGate() {
+      clearInterval(state.adGateInterval);
+      closeModal('ad-gate-modal');
+    }
+
+    function openUnlockedDirect(id, isQuiz) {
+      if (isQuiz) {
+        startQuiz(id);
+      } else {
+        openMaterialViewer(id);
+      }
+    }
+
+    // MATERIAL READER & DOWNLOADER
+    function openMaterialViewer(id) {
+      const item = state.materials.find(m => m.id === id);
+      if (!item) return;
+
+      document.getElementById('viewer-title').textContent = item.title;
+      document.getElementById('viewer-badges').innerHTML = `
+        <span class="px-2.5 py-0.5 rounded-lg text-xs font-black bg-slate-900 text-white">${escapeHtml(item.category)}</span>
+        <span class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-emerald-100 text-emerald-800">${escapeHtml(item.type)}</span>
+      `;
+      document.getElementById('viewer-meta').innerHTML = `
+        <div><span class="text-slate-400 block">Agency / Force</span><strong class="text-slate-800 dark:text-slate-200">${escapeHtml(item.category)}</strong></div>
+        <div><span class="text-slate-400 block">Published Date</span><strong class="text-slate-800 dark:text-slate-200">${item.date}</strong></div>
+        <div class="col-span-2 sm:col-span-1"><span class="text-slate-400 block">Info</span><strong class="text-slate-800 dark:text-slate-200">${escapeHtml(item.meta)}</strong></div>
+      `;
+      document.getElementById('viewer-body').textContent = item.content;
+
+      const extBtn = item.externalUrl
+        ? `<a href="${escapeHtml(item.externalUrl)}" target="_blank" rel="noopener" class="w-full sm:w-auto py-3 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm text-center">🔗 Open External PDF Link</a>`
+        : '';
+
+      document.getElementById('viewer-actions').innerHTML = `
+        <button type="button" onclick="downloadMaterialTxt('${item.id}')" class="w-full sm:w-auto flex-1 py-3 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow transition">
+          ⬇️ Download Study File (.txt)
+        </button>
+        ${extBtn}
+        <button type="button" onclick="closeModal('viewer-modal')" class="w-full sm:w-auto py-3 px-5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-sm">
+          Close
+        </button>
+      `;
+
+      document.getElementById('viewer-modal').classList.remove('hidden');
+    }
+
+    function downloadMaterialTxt(id) {
+      const item = state.materials.find(m => m.id === id);
+      if (!item) return;
+
+      const blob = new Blob(
+        [`ALL IN ONE PORTAL PAKISTAN\n==========================\nTitle: ${item.title}\nAgency: ${item.category}\nType: ${item.type}\nDetails: ${item.meta}\n\n${item.content}`],
+        { type: 'text/plain;charset=utf-8' }
+      );
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${item.category}_${item.title.replace(/[^a-z0-9]/gi, '_').slice(0, 35)}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('⬇️ Download started!');
+    }
+
+    // INTERACTIVE QUIZ ENGINE
+    function startQuiz(quizId) {
+      const quiz = state.quizzes.find(q => q.id === quizId);
+      if (!quiz) return;
+
+      state.activeQuiz = quiz;
+      state.quizIdx = 0;
+      state.quizAnswers = new Array(quiz.questions.length).fill(null);
+      state.quizSeconds = (quiz.durationMinutes || 5) * 60;
+
+      document.getElementById('quiz-category-badge').textContent = quiz.category;
+      document.getElementById('quiz-modal-title').textContent = quiz.title;
+      document.getElementById('quiz-modal').classList.remove('hidden');
+
+      clearInterval(state.quizTimer);
+      updateQuizClock();
+      state.quizTimer = setInterval(() => {
+        state.quizSeconds -= 1;
+        updateQuizClock();
+        if (state.quizSeconds <= 0) {
+          clearInterval(state.quizTimer);
+          submitQuizScore();
+        }
+      }, 1000);
+
+      renderCurrentQuizQuestion();
+    }
+
+    function updateQuizClock() {
+      const m = String(Math.floor(state.quizSeconds / 60)).padStart(2, '0');
+      const s = String(state.quizSeconds % 60).padStart(2, '0');
+      document.getElementById('quiz-timer').textContent = `${m}:${s}`;
+    }
+
+    function renderCurrentQuizQuestion() {
+      const quiz = state.activeQuiz;
+      const idx = state.quizIdx;
+      const qObj = quiz.questions[idx];
+      const picked = state.quizAnswers[idx];
+
+      document.getElementById('quiz-body').innerHTML = `
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-3">
+          <span>Question ${idx + 1} of ${quiz.questions.length}</span>
+          <span>${Math.round(((idx + 1) / quiz.questions.length) * 100)}% Complete</span>
+        </div>
+        <div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden mb-5">
+          <div class="h-full bg-emerald-600 transition-all" style="width: ${((idx + 1) / quiz.questions.length) * 100}%"></div>
+        </div>
+        <h4 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white mb-4">${escapeHtml(qObj.q)}</h4>
+        <div class="space-y-2.5">
+          ${qObj.options.map((opt, i) => {
+            let cls = 'border-slate-200 dark:border-slate-700 hover:border-emerald-500 bg-white dark:bg-slate-800/60';
+            if (picked !== null) {
+              if (i === qObj.correct) {
+                cls = 'border-emerald-600 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200 font-bold';
+              } else if (i === picked) {
+                cls = 'border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200';
+              }
+            }
+            return `
+              <button type="button" onclick="pickQuizOption(${i})" ${picked !== null ? 'disabled' : ''} class="w-full text-left p-3.5 rounded-xl border-2 text-sm transition flex items-center gap-3 ${cls}">
+                <span class="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center font-black text-xs shrink-0">${['A', 'B', 'C', 'D'][i]}</span>
+                <span>${escapeHtml(opt)}</span>
+              </button>
+            `;
+          }).join('')}
+        </div>
+        ${picked !== null ? `<div class="mt-4 p-3.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs"><strong>💡 Explanation:</strong> ${escapeHtml(qObj.exp || 'Correct option highlighted in green.')}</div>` : ''}
+        <div class="mt-6 flex items-center justify-between">
+          <button type="button" onclick="navQuiz(-1)" ${idx === 0 ? 'disabled' : ''} class="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold disabled:opacity-40">← Prev</button>
+          ${idx < quiz.questions.length - 1
+            ? `<button type="button" onclick="navQuiz(1)" class="px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-extrabold">Next →</button>`
+            : `<button type="button" onclick="submitQuizScore()" class="px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-emerald-600 text-white text-xs sm:text-sm font-extrabold">Finish &amp; See Score ✔</button>`}
+        </div>
+      `;
+    }
+
+    function pickQuizOption(optIdx) {
+      if (state.quizAnswers[state.quizIdx] !== null) return;
+      state.quizAnswers[state.quizIdx] = optIdx;
+      renderCurrentQuizQuestion();
+    }
+
+    function navQuiz(dir) {
+      state.quizIdx = Math.min(state.activeQuiz.questions.length - 1, Math.max(0, state.quizIdx + dir));
+      renderCurrentQuizQuestion();
+    }
+
+    function submitQuizScore() {
+      clearInterval(state.quizTimer);
+      const quiz = state.activeQuiz;
+      let score = 0;
+      quiz.questions.forEach((q, i) => {
+        if (state.quizAnswers[i] === q.correct) score += 1;
+      });
+      const pct = Math.round((score / quiz.questions.length) * 100);
+
+      document.getElementById('quiz-body').innerHTML = `
+        <div class="text-center py-6">
+          <div class="text-5xl mb-3">${pct >= 70 ? '🏆' : '📘'}</div>
+          <h4 class="text-2xl font-black text-slate-900 dark:text-white">Test Completed!</h4>
+          <p class="text-sm text-slate-500 mt-1">${escapeHtml(quiz.title)}</p>
+          <div class="my-6 inline-flex items-center gap-6 bg-slate-50 dark:bg-slate-800 px-6 py-4 rounded-2xl border border-slate-200 dark:border-slate-700">
+            <div><div class="text-xs text-slate-500">Correct</div><div class="text-2xl font-black text-emerald-600">${score} / ${quiz.questions.length}</div></div>
+            <div class="h-8 w-px bg-slate-300 dark:bg-slate-600"></div>
+            <div><div class="text-xs text-slate-500">Score</div><div class="text-2xl font-black text-slate-900 dark:text-white">${pct}%</div></div>
+          </div>
+          <div class="flex justify-center gap-3">
+            <button type="button" onclick="startQuiz('${quiz.id}')" class="px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-bold">Retake Quiz</button>
+            <button type="button" onclick="closeQuizModal()" class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-sm font-bold">Back to Blocks</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function closeQuizModal() {
+      clearInterval(state.quizTimer);
+      closeModal('quiz-modal');
+    }
+
+    // STUDENT VIP CHECKOUT
+    function openVipModal(price) {
+      if (price) {
+        document.getElementById('vip-modal-price-display').textContent = `Rs. ${price}`;
+      } else {
+        document.getElementById('vip-modal-price-display').textContent = 'Rs. 499';
+      }
+      document.getElementById('vip-modal').classList.remove('hidden');
+    }
+
+    function selectPaymentGateway(btn, gw) {
+      document.querySelectorAll('.pay-gw-btn').forEach(b => {
+        b.className = 'pay-gw-btn p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-center';
+      });
+      btn.className = 'pay-gw-btn p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/30 text-center';
+      showToast(`Selected ${gw}`);
+    }
+
+    function completeVipPurchase(isDemo) {
+      const trx = document.getElementById('vip-trx-input').value.trim();
+      if (!isDemo && !trx) {
+        showToast('Please enter Transaction ID or click Instant Demo VIP Unlock.');
+        return;
+      }
+      state.isVipStudent = true;
+      state.vipSalesCount += 1;
+      saveState();
+      updateVipStudentUI();
+      renderTopAdBanner();
+      applyFilters();
+      updateAdminStats();
+      closeModal('vip-modal');
+      showToast('👑 VIP Pass Activated! All Paid Materials & Ad-Free Mode Unlocked.');
+    }
+
+    function updateVipStudentUI() {
+      const badge = document.getElementById('header-vip-badge');
+      const navBtn = document.getElementById('nav-vip-btn-text');
+      if (state.isVipStudent) {
+        badge.textContent = 'Student: VIP Unlocked ✔';
+        navBtn.textContent = 'VIP Active ✔';
+      } else {
+        badge.textContent = 'Student: Standard Mode';
+        navBtn.textContent = 'Unlock VIP Pass';
+      }
+    }
+
+    // =====================================================================
+    // OWNER ADMIN STUDIO FUNCTIONS
+    // =====================================================================
+    function openAdminStudio(defaultTab) {
+      if (!state.isAdminAuthenticated) {
+        openSecretAdminLogin();
+        return;
+      }
+      updateAdminStats();
+      renderAdminAdsList();
+      renderAdminLibraryList();
+      switchAdminTab(defaultTab || 'upload-material');
+      document.getElementById('admin-studio-modal').classList.remove('hidden');
+    }
+
+    function switchAdminTab(tab) {
+      ['upload-material', 'upload-quiz', 'ad-campaigns', 'manage-all'].forEach(t => {
+        document.getElementById(`admin-panel-${t}`).classList.add('hidden');
+        const btn = document.getElementById(`admin-tab-btn-${t}`);
+        btn.className = 'admin-tab-btn px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300';
+      });
+      document.getElementById(`admin-panel-${tab}`).classList.remove('hidden');
+      document.getElementById(`admin-tab-btn-${tab}`).className = 'admin-tab-btn px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-extrabold bg-emerald-600 text-white';
+    }
+
+    function toggleMaterialPriceField() {
+      const val = document.getElementById('mat-monetization').value;
+      const box = document.getElementById('mat-price-box');
+      if (val === 'ad_only') {
+        box.classList.add('opacity-40', 'pointer-events-none');
+      } else {
+        box.classList.remove('opacity-40', 'pointer-events-none');
+      }
+    }
+
+    function handleUploadMaterial(e) {
+      e.preventDefault();
+      const title = document.getElementById('mat-title').value.trim();
+      const category = document.getElementById('mat-category').value;
+      const type = document.getElementById('mat-type').value;
+      const monetization = document.getElementById('mat-monetization').value;
+      const price = monetization === 'ad_only' ? 0 : Number(document.getElementById('mat-price').value || 250);
+      const fileIn = document.getElementById('mat-file-input');
+      const attached = fileIn.files && fileIn.files[0] ? `File: ${fileIn.files[0].name}` : '';
+      const metaRaw = document.getElementById('mat-meta').value.trim();
+      const meta = [metaRaw, attached].filter(Boolean).join(' • ') || `${type} • Ready`;
+      const externalUrl = document.getElementById('mat-external-url').value.trim();
+      const content = document.getElementById('mat-content').value.trim();
+
+      state.materials.unshift({
+        id: 'mat-' + Date.now(),
+        title,
+        category,
+        type,
+        monetization,
+        price,
+        date: new Date().toISOString().slice(0, 10),
+        meta,
+        externalUrl,
+        summary: content.slice(0, 150) + (content.length > 150 ? '...' : ''),
+        content
+      });
+
+      saveState();
+      applyFilters();
+      updateAdminStats();
+      renderAdminLibraryList();
+      e.target.reset();
+      toggleMaterialPriceField();
+      showToast(`✅ Published "${title}" (${monetization.replace('_', ' ').toUpperCase()})!`);
+    }
+
+    function stageMcqItem() {
+      const q = document.getElementById('mcq-q-in').value.trim();
+      const o0 = document.getElementById('mcq-o0').value.trim();
+      const o1 = document.getElementById('mcq-o1').value.trim();
+      const o2 = document.getElementById('mcq-o2').value.trim();
+      const o3 = document.getElementById('mcq-o3').value.trim();
+      const correct = Number(document.getElementById('mcq-ans-in').value);
+      const exp = document.getElementById('mcq-exp-in').value.trim();
+
+      if (!q || !o0 || !o1 || !o2 || !o3) {
+        showToast('Fill question and all 4 options first.');
+        return;
+      }
+
+      state.stagedMcqs.push({ q, options: [o0, o1, o2, o3], correct, exp });
+      document.getElementById('staged-mcq-count').textContent = state.stagedMcqs.length;
+      document.getElementById('mcq-q-in').value = '';
+      document.getElementById('mcq-o0').value = '';
+      document.getElementById('mcq-o1').value = '';
+      document.getElementById('mcq-o2').value = '';
+      document.getElementById('mcq-o3').value = '';
+      document.getElementById('mcq-exp-in').value = '';
+      showToast(`Question #${state.stagedMcqs.length} added!`);
+    }
+
+    function handleUploadQuiz(e) {
+      e.preventDefault();
+      if (document.getElementById('mcq-q-in').value.trim()) {
+        stageMcqItem();
+      }
+      if (state.stagedMcqs.length === 0) {
+        showToast('Add at least 1 MCQ question before publishing.');
+        return;
+      }
+
+      const title = document.getElementById('quiz-title-in').value.trim();
+      const category = document.getElementById('quiz-cat-in').value;
+      const monetization = document.getElementById('quiz-monetization-in').value;
+
+      state.quizzes.unshift({
+        id: 'quiz-' + Date.now(),
+        title,
+        category,
+        monetization,
+        price: monetization === 'ad_only' ? 0 : 200,
+        durationMinutes: Math.max(3, state.stagedMcqs.length * 2),
+        questions: [...state.stagedMcqs]
+      });
+
+      state.stagedMcqs = [];
+      document.getElementById('staged-mcq-count').textContent = '0';
+      saveState();
+      applyFilters();
+      updateAdminStats();
+      renderAdminLibraryList();
+      e.target.reset();
+      showToast(`🚀 Quiz "${title}" published!`);
+    }
+
+    // AD CAMPAIGN MANAGER ("Ad Run Karne Wala Option")
+    function handleCreateAdCampaign(e) {
+      e.preventDefault();
+      const title = document.getElementById('ad-title-in').value.trim();
+      const sponsor = document.getElementById('ad-sponsor-in').value.trim();
+      const placement = document.getElementById('ad-placement-in').value;
+      const desc = document.getElementById('ad-desc-in').value.trim();
+      const link = document.getElementById('ad-link-in').value.trim() || 'https://example.com';
+      const ratePkr = Number(document.getElementById('ad-rate-in').value || 25);
+      const imageUrl = document.getElementById('ad-img-in').value.trim();
+
+      state.ads.unshift({
+        id: 'ad-' + Date.now(),
+        title,
+        sponsor,
+        desc,
+        placement,
+        link,
+        imageUrl,
+        ratePkr,
+        impressions: 0,
+        clicks: 0,
+        active: true
+      });
+
+      saveState();
+      renderTopAdBanner();
+      applyFilters();
+      renderAdminAdsList();
+      updateAdminStats();
+      e.target.reset();
+      showToast(`📢 Ad Campaign "${title}" is now LIVE!`);
+    }
+
+    function toggleAdCampaignStatus(adId) {
+      const ad = state.ads.find(a => a.id === adId);
+      if (!ad) return;
+      ad.active = !ad.active;
+      saveState();
+      renderTopAdBanner();
+      applyFilters();
+      renderAdminAdsList();
+      showToast(ad.active ? `▶️ Ad "${ad.title}" Resumed` : `⏸️ Ad "${ad.title}" Paused`);
+    }
+
+    function deleteAdCampaign(adId) {
+      state.ads = state.ads.filter(a => a.id !== adId);
+      saveState();
+      renderTopAdBanner();
+      applyFilters();
+      renderAdminAdsList();
+      updateAdminStats();
+      showToast('🗑️ Ad Campaign deleted.');
+    }
+
+    function renderAdminAdsList() {
+      const container = document.getElementById('admin-ads-list');
+      if (state.ads.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-500">No ad campaigns created yet. Use the form above to launch your first ad.</p>`;
+        return;
+      }
+
+      container.innerHTML = state.ads.map(ad => {
+        const earned = ad.clicks * ad.ratePkr;
+        return `
+          <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="flex flex-wrap items-center gap-2 text-[11px]">
+                <span class="px-2 py-0.5 rounded font-extrabold ${ad.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'}">
+                  ${ad.active ? '● RUNNING' : '⏸ PAUSED'}
+                </span>
+                <span class="font-bold text-amber-600">${escapeHtml(ad.sponsor)}</span>
+                <span class="text-slate-400">• Slot: ${ad.placement}</span>
+              </div>
+              <div class="text-sm font-extrabold text-slate-900 dark:text-white mt-1">${escapeHtml(ad.title)}</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">
+                Views: <strong>${ad.impressions}</strong> • Clicks/Unlocks: <strong>${ad.clicks}</strong> • Earned: <strong class="text-emerald-600">Rs. ${earned.toLocaleString()}</strong>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" onclick="toggleAdCampaignStatus('${ad.id}')" class="px-3 py-1.5 rounded-lg text-xs font-bold ${ad.active ? 'bg-amber-100 text-amber-800' : 'bg-emerald-600 text-white'}">
+                ${ad.active ? 'Pause Ad' : 'Run Ad'}
+              </button>
+              <button type="button" onclick="deleteAdCampaign('${ad.id}')" class="px-3 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/40 text-rose-600 text-xs font-bold">
+                Delete
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAdminLibraryList() {
+      const list = document.getElementById('admin-library-list');
+      const all = [
+        ...state.materials.map(m => ({ ...m, kind: 'mat' })),
+        ...state.quizzes.map(q => ({ id: q.id, title: q.title, category: q.category, type: 'Quiz', monetization: q.monetization, kind: 'quiz' }))
+      ];
+
+      list.innerHTML = all.map(item => `
+        <div class="flex items-center justify-between gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5 text-[11px]">
+              <span class="font-extrabold text-emerald-600">${escapeHtml(item.category)}</span> •
+              <span>${escapeHtml(item.type)}</span> •
+              <span class="font-bold uppercase text-amber-600">${item.monetization.replace('_', ' ')}</span>
+            </div>
+            <div class="text-xs font-bold text-slate-900 dark:text-white truncate">${escapeHtml(item.title)}</div>
+          </div>
+          <button type="button" onclick="deletePortalBlock('${item.id}', '${item.kind}')" class="px-2.5 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/40 text-rose-600 text-xs font-bold shrink-0">
+            Delete
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function deletePortalBlock(id, kind) {
+      if (kind === 'quiz') {
+        state.quizzes = state.quizzes.filter(q => q.id !== id);
+      } else {
+        state.materials = state.materials.filter(m => m.id !== id);
+      }
+      saveState();
+      applyFilters();
+      renderAdminLibraryList();
+      updateAdminStats();
+      showToast('Block deleted.');
+    }
+
+    function updateAdminStats() {
+      const totalBlocks = state.materials.length + state.quizzes.length;
+      const adEarnings = state.ads.reduce((sum, a) => sum + (a.clicks * a.ratePkr), 0);
+      const paidEarnings = state.vipSalesCount * 499;
+
+      document.getElementById('stat-total-blocks').textContent = totalBlocks;
+      document.getElementById('stat-ad-earnings').textContent = `Rs. ${adEarnings.toLocaleString()}`;
+      document.getElementById('stat-paid-earnings').textContent = `Rs. ${paidEarnings.toLocaleString()}`;
+      document.getElementById('stat-combined-earnings').textContent = `Rs. ${(adEarnings + paidEarnings).toLocaleString()}`;
+    }
+
+    function exportBackupJson() {
+      const data = JSON.stringify({ materials: state.materials, quizzes: state.quizzes, ads: state.ads }, null, 2);
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `All_In_ONE_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('⬇️ Backup JSON exported!');
+    }
+
+    function restoreDefaultPortal() {
+      state.materials = [...DEFAULT_MATERIALS];
+      state.quizzes = [...DEFAULT_QUIZZES];
+      state.ads = [...DEFAULT_ADS];
+      saveState();
+      renderTopAdBanner();
+      applyFilters();
+      renderAdminAdsList();
+      renderAdminLibraryList();
+      updateAdminStats();
+      showToast('Portal restored to default blocks & ads.');
+    }
+
+    // UTILITIES
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toast-container');
+      const el = document.createElement('div');
+      el.className = 'pointer-events-auto bg-slate-900 dark:bg-emerald-600 text-white text-xs sm:text-sm font-bold px-4 py-3 rounded-xl shadow-xl border border-slate-700/60 transition-all';
+      el.textContent = msg;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 250);
+      }, 3200);
+    }
+  </script>
+</body>
+</html>
